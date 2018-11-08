@@ -4,19 +4,19 @@
 <head>
     <title>Login</title>
     <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+    <script src="javascripts/signin.js" defer></script>
 </head>
 
 <body>
     <div class="login-page">
         <div class="form">
-            <form class="login-form" action="controller.php" method="POST">
-                <input type="text" name="ID" placeholder="username" value=""><br>
-                <br>
-                <input type="password" name="password" placeholder="password" value=""><br> <br>
-                <button>login</button>
-            </form>
+            <input type="text" name="ID" id="email" placeholder="email" value=""><br>
+            <br>
+            <input type="password" name="password" id="password" placeholder="password" value=""><br> <br>
+            <button id="signin">login</button>
         </div>
     </div>
+    <div id="ServerResponse"></div>
 
 </body>
 

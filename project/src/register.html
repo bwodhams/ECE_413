@@ -3,22 +3,25 @@
 
 <head>
     <title>Register</title>
-    <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/style.css?v=1.1">
+    <script src="javascripts/register.js" defer></script>
 </head>
 
 <body>
     <div class="registration-page">
         <div class="form">
-            <form class="registration-form" action="#" method="POST">
-                <input type="text" name="registerID" pattern=".{4,}" title="Username must be 4 or more characters long"
-                    placeholder="username" value="" required><br>
-                <br>
-                <input type="password" name="registerPassword" pattern=".{6,}" title="Password must be 6 or more characters long"
-                    placeholder="password" value="" required><br> <br>
-                <button>register</button>
-            </form>
+            <input type="text" name="email" id="email" title="Input your email address" placeholder="email">
+            <br>
+            <input type="text" name="fullName" id="fullName" title="Enter your first and last name" placeholder="full name">
+            <br>
+            <input type="password" name="password" pattern=".{6,}" id="password" title="Password must be 6 or more characters long"
+                placeholder="password" value="" required><br>
+            <input type="password" name="confirmPassword" pattern=".{6,}" id="passwordConfirm" title="Confirm your password"
+            placeholder="confirm password" value="" required><br> <br>
+            <button id="signup">register</button>
         </div>
     </div>
+    <div id="responseDiv"></div>
 
 </body>
 
