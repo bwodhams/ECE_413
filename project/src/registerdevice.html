@@ -4,17 +4,25 @@
 <head>
     <title>Register Device</title>
     <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+    <script src="javascripts/devices.js" defer></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+
 </head>
 
 <body>
     <div class="registration-page">
         <div class="form">
-            <form class="registration-form" action="#" method="POST">
-                <input type="text" name="uvfitId" title="Input your UVFit ID" placeholder="UVFit ID" value="" required><br>
-                <br>
-                <button>submit</button>
-            </form>
+            <input id="deviceId" type="text" name="uvfitId" title="Input your UVFit ID" placeholder="UVFit Device ID" value=""
+                required><br>
+            <br>
+            <input id="nameInput" type="text" name="name" title="Name your device" placeholder="Name your device" value=""
+                required><br>
+            <br>
+            <div id="serverResponse"></div>
+            <button id="submitButton">submit</button>
         </div>
+
     </div>
 
 </body>
