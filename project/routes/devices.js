@@ -74,14 +74,7 @@ router.post('/register', function(req, res, next) {
             return res.status(400).json(responseJson);
         }
     }
-    else {
-        // Ensure the request includes the email parameter
-        if( !req.body.hasOwnProperty("email")) {
-            responseJson.message = "Invalid authorization token or missing email address.";
-            return res.status(400).json(responseJson);
-        }
-        email = req.body.email;
-    }
+    
     
     // See if device is already registered
     Device.findOne({ deviceId: req.body.deviceId }, function(err, device) {
@@ -95,9 +88,11 @@ router.post('/register', function(req, res, next) {
 	         
 	         // Create a new device with specified id, user email, and randomly generated apikey.
             var newDevice = new Device({
+				name: req.body.name,
                 deviceId: req.body.deviceId,
                 userEmail: email,
-                apikey: deviceApikey
+                apikey: deviceApikey,
+				threshold: req.body.threshold,
             });
 
             // Save device. If successful, return success. If not, return error message.
