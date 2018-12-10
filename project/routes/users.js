@@ -3,6 +3,7 @@ var router = express.Router();
 var fs = require('fs');
 var User = require("../models/users");
 var Device = require("../models/device");
+var HwData = require("../models/hwdata");
 var bcrypt = require("bcrypt-nodejs");
 var jwt = require("jwt-simple");
 
@@ -66,7 +67,7 @@ router.get("/account" , function(req, res) {
    
    var authToken = req.headers["x-auth"];
    
-   try {
+try {
       var decodedToken = jwt.decode(authToken, secret);
       var userStatus = {};
       
@@ -89,13 +90,32 @@ router.get("/account" , function(req, res) {
 				         deviceList.push({ 
 				               deviceId: device.deviceId,
 				               apikey: device.apikey,
+							   name: device.name
 				         });
 			         }
+					 
 			         userStatus['devices'] = deviceList;
+				HwData.find({userEmail : decodedToken.email}, function(err, hwdatas){
+					if(!err){
+						var dataList = [];
+						for(hwdata of hwdatas){
+							dataList.push({
+								latitude: hwdata.latitude,
+								longitude: hwdata.longitude,
+								speed: hwdata.speed,
+								uv: hwdata.UVIndex
+							});
+						}
+						userStatus['data'] = dataList;
+					}
+					return res.status(200).json(userStatus);     
+					});
 			      }
-			      
-               return res.status(200).json(userStatus);            
+				  
 		      });
+			  
+			 
+				
          }
       });
    }
@@ -103,6 +123,64 @@ router.get("/account" , function(req, res) {
       return res.status(401).json({success: false, message: "Invalid authentication token."});
    }
    
+});
+
+router.put("/update", function(req, res, next){
+	
+     // Check for authentication token in x-auth header
+   if (!req.headers["x-auth"]) {
+    return res.status(401).json({success: false, message: "No authentication token"});
+   }
+ 
+ var authToken = req.headers["x-auth"];
+ 
+try {
+    var decodedToken = jwt.decode(authToken, secret);
+    var userStatus = {};
+    
+    bcrypt.hash(req.body.password, null, null, function(err, hash) {
+        if(err){
+            res.status(400).json( {success: false, message: err.errmsg});
+        }
+        else{
+         User.updateOne( {email: decodedToken.email},
+                              {fullName: req.body.name, passwordHash: hash, email: req.body.email}, 
+                               function(err, user){
+                                if(err){
+                                    res.status(400).json( {success: false, message: err.errmsg});
+                                }
+                                else{
+                                    Device.updateMany({userEmail: decodedToken.email}, {userEmail: req.body.email},
+ 									 function(err, devices){
+										if(err){
+											res.status(400).json( {success: false, message: err.errmsg});
+										}
+										else{
+											HwData.update({userEmail: decodedToken.email}, {$set: {userEmail: req.body.email}}, {multi: true},
+												function(err, hwdatas){
+													if(err){
+														res.status(400).json( {success: false, message: err.errmsg});
+													}
+													else{
+													
+													res.status(201).json( {success: true, message: "Information has been updated successfully."});
+													console.log(res.status);
+												}//else
+											 }//function
+											);//update many										
+										}//else
+									 }//function
+									);//update many
+                                }//else
+                             });//function and update one	
+            }//else
+    });
+	
+  }
+
+ catch (ex) {
+    return res.status(401).json({success: false, message: "Invalid authentication token."});
+ }
 });
 
 module.exports = router;
