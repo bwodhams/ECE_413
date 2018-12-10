@@ -4,7 +4,7 @@
 <head>
     <title>Register Device</title>
     <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
-    <script src="javascripts/devices.js" defer></script>
+    <script src="javascripts/editdevice.js" defer></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
 
@@ -20,10 +20,12 @@
     </div>
     <div class="registration-page">
         <div class="form">
-            <input id="deviceId" type="text" name="uvfitId" title="Input your UVFit ID" placeholder="UVFit Device ID"
+            <label id="originalDevId"></label>
+            <input id="deviceId" type="text" name="uvfitId" title="Input your UVFit ID" placeholder="enter new UVFit Device ID"
                 value="" required><br>
             <br>
-            <input id="nameInput" type="text" name="name" title="Name your device" placeholder="Name your device" value=""
+            <label id="originalDevName"></label>
+            <input id="nameInput" type="text" name="name" title="Name your device" placeholder="enter new name for your device" value=""
                 required><br>
             <br>
             <div id="serverResponse"></div>

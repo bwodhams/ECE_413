@@ -16,7 +16,7 @@ function registerDevice() {
         },
         data: {
             deviceId: $("#deviceId").val(),
-            nameInput: $("nameInput").val()
+            name: $("#nameInput").val()
         },
         responseType: 'json',
         success: function (data, textStatus, jqXHR) {

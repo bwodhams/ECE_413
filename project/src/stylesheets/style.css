@@ -115,3 +115,44 @@ body {
 	display: inline;
 	vertical-align: middle;
 }
+
+table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+td,
+th {
+	border: 1px solid #dddddd;
+	text-align: left;
+	padding: 8px;
+}
+
+tr:nth-child(even) {
+	background-color: #dddddd;
+}
+
+tr:nth-child(odd) {
+	background-color: #c0bfbf;
+}
+
+input[type=radio] {
+	display: inline;
+	text-align: left;
+	width: 10%;
+}
+
+#formErrors li {
+	color: red;
+}
+
+.allDevices button {
+	float: left;
+	margin-left: 15px;
+	margin-right: 5px;
+}
+
+#editButtons {
+	float: right;
+}

@@ -14,10 +14,11 @@
             <br>
             <input type="text" name="fullName" id="fullName" title="Enter your first and last name" placeholder="full name">
             <br>
-            <input type="password" name="password" pattern=".{6,}" id="password" title="Password must be 6 or more characters long"
+            <input type="password" name="password" id="password" title="Enter password"
                 placeholder="password" value="" required><br>
-            <input type="password" name="confirmPassword" pattern=".{6,}" id="passwordConfirm" title="Confirm your password"
+            <input type="password" name="confirmPassword" id="passwordConfirm" title="Confirm your password"
             placeholder="confirm password" value="" required><br> <br>
+            <div id = "formErrors"></div>
             <button id="signup">register</button>
         </div>
     </div>

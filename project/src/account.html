@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Account Information</title>
+    <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+    <script src="javascripts/account.js" defer></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+
+</head>
+
+<body>
+    <div class="allbtns">
+        <form action="home.html">
+            <div>
+                <button class="btn btn-home-container btn-home"><i>Home</i></button>
+            </div>
+        </form>
+    </div>
+    <div class="registration-page">
+        <div class="form">
+            <label for="accEmail">Change Your Information</label><br><br>
+            <label id="currentName"></label><br>
+            <label id="currentEmail"></label>
+            <input id="accName" type="text" name="accName" title="Edit your name" placeholder="enter new name"
+                value=""><br>
+            <br>
+            <input id="accEmail" type="text" name="accEmail" title="Edit your email" placeholder="enter new email address"
+                value=""><br>
+            <br>
+            <input id="accPassword" type="password" name="accPassword" title="Enter old password" placeholder="enter current password"
+                value=""><br>
+            <br>
+            <div id="mainDiv">
+                <label>Change password?</label>
+                <input type="radio" name="changePass" id="yesChangePass" value="yes"> Yes <input type="radio" name="changePass"
+                    value="no" checked> No<br>
+            </div>
+            <div id="formErrors"></div>
+            <div id="serverResponse"></div>
+            <button id="submitButton">submit</button>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
