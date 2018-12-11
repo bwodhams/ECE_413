@@ -156,3 +156,21 @@ input[type=radio] {
 #editButtons {
 	float: right;
 }
+
+#map {
+	height: 400px;
+	width: 100%;
+}
+
+.activity {
+	color: white;
+}
+
+.activity input[type=radio] {
+	width: 1%;
+}
+
+.activity button {
+	margin-left: 10px;
+	margin-right: 10px;
+}

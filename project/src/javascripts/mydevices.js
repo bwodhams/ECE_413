@@ -16,6 +16,7 @@ function sendReqForAccountInfo() {
         error: accountInfoError
     });
 }
+var dataPlots;
 
 function accountInfoSuccess(data, textStatus, jqXHR) {
     if (data.devices.length != 0) {
@@ -26,24 +27,54 @@ function accountInfoSuccess(data, textStatus, jqXHR) {
         // Add the devices to the list before the list item for the add device button (link)
         let deviceNum = 0;
         for (var device of data.devices) {
-            outputHTML += "<tr><td>" + device.name + '<div id="editButtons"><button id="editName' + deviceNum + '" onclick=editDeviceName(' + deviceNum + ')>edit</button>' + '&nbsp;&nbsp;&nbsp;<button id="deleteDevice' + deviceNum + '" onclick=deleteDevice(' + deviceNum + ')>delete</button></div></td><td>' +
+            outputHTML += '<tr><td><button id="' + device.deviceId + '" onclick = updateData("' + device.deviceId + '")>' + device.name + '</button>' + '<div id="editButtons"><button id="editName' + deviceNum + '" onclick=editDeviceName(' + deviceNum + ')>edit</button>' + '&nbsp;&nbsp;&nbsp;<button id="deleteDevice' + deviceNum + '" onclick=deleteDevice(' + deviceNum + ')>delete</button></div></td><td>' +
                 device.deviceId + "</td><td>" + device.apikey + "</td></tr>";
             deviceNum++;
         }
-        if (data.data.length != 0) {
-            outputHTML += "</table><br><br><table><tr><th>Latitude</th><th>Longitude</th><th>Speed</th><th>UV</th></tr>";
 
-            for (let i = data.data.length - 1; i >= 0; i--) {
-                outputHTML += "<tr><td>" + data.data[i].latitude + "</td><td>" + data.data[i].longitude + "</td><td>" + data.data[i].speed + "</td><td>" + data.data[i].uv + "</td></tr>";
-            }
-        }
+        outputHTML += "</table><br><br>";
 
-        $("#allDevices").html(outputHTML + "</table>");
+        dataPlots = data.data;
+        console.log(dataPlots);
+
+        $("#allDevices").html(outputHTML);
     } else {
         $("#noDevices").text("You have no registered devices.");
     }
 
 }
+let currentDataPoints = [];
+
+function updateData(deviceId) {
+
+    var outputHTML = "";
+    var count = 0;
+
+    //data.datas.length != 0
+    //console.log(this);
+    if (dataPlots.length != 0) {
+        outputHTML += '<div class="activity">Select an activity to view a map of the activity!   <button id="biking" onclick=drawMap("biking")>Biking</button><button id="running" onclick=drawMap("running")>Running</button><button id="walking" onclick=drawMap("walking")>Walking</button></div><br><table><tr><th>Latitude</th><th>Longitude</th><th>Speed</th><th>Activity</th><th>UV</th><th>Calories Burned</th></tr>';
+        for (let i = dataPlots.length - 1; i >= 0; i--) {
+            if (dataPlots[i].deviceId == deviceId) {
+                currentDataPoints.push(dataPlots[i]);
+                count++;
+                outputHTML += "<tr><td>" + dataPlots[i].latitude + "</td><td>" + dataPlots[i].longitude + "</td><td>" + dataPlots[i].speed + "</td><td>" + dataPlots[i].activity + "</td><td>" + dataPlots[i].uv + "</td><td>//calculate calories</tr>";
+            }
+        }
+        if (count > 0) {
+            $("#deviceInfo").html(outputHTML + "</table>");
+            drawMap(0);
+        } else {
+            $("#noData").text("You have no data for device : " + deviceId);
+        }
+
+    } else {
+        $("#noData").text("You have no data for this device." + deviceId);
+    }
+}
+
+
+
 
 function editDeviceName(deviceNumber) {
     window.location.replace("editdevice.html?deviceNum=" + deviceNumber);
@@ -115,4 +146,46 @@ function signUpResponse() {
     // Update the response div in the webpage and make it visible
     responseDiv.style.display = "block";
     responseDiv.innerHTML = responseHTML;
+}
+
+function drawMap(data) {
+    if (data == 0) {
+        let uluru = {
+            lat: 32.2319,
+            lng: -110.9501
+        };
+        let map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 16,
+            center: uluru
+        });
+        var marker = new google.maps.Marker({
+            position: uluru,
+            map: map
+        });
+    } else {
+        let uluru = {
+            lat: 32.2319,
+            lng: -110.9501
+        };
+        let map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 14,
+            center: uluru
+        });
+        for (var location of currentDataPoints) {
+            if (location.activity == data) {
+                uluru = {
+                    lat: location.latitude,
+                    lng: location.longitude
+                };
+                var marker = new google.maps.Marker({
+                    position: uluru,
+                    map: map
+                });
+            }
+        }
+
+
+    }
+
+
 }

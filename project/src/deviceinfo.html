@@ -6,6 +6,8 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="javascripts/mydevices.js" defer></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAx1IuXbJpL4iQHatJXjba9ULzppC5I3Qk">
+    </script>
 </head>
 
 <body>
@@ -24,8 +26,19 @@
     <div class="allDevices" id="allDevices">
 
     </div>
+    <br>
+    <div style="font-size: 20pt; color: white"> Click on device name to see device data</div>
+    <br>
 
+    <div id="noData" style="font-size: 25pt">
 
+    </div>
+
+    <div class="deviceInfo" id="deviceInfo">
+
+    </div>
+    <br>
+    <div id="map"></div>
 </body>
 
 </html>

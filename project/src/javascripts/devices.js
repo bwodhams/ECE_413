@@ -16,7 +16,9 @@ function registerDevice() {
         },
         data: {
             deviceId: $("#deviceId").val(),
-            name: $("#nameInput").val()
+            name: $("#nameInput").val(),
+			threshold: $("#threshold").val(),
+			token: $("#token").val()
         },
         responseType: 'json',
         success: function (data, textStatus, jqXHR) {
@@ -32,4 +34,10 @@ function registerDevice() {
             responseDiv.innerText = "Error: " + response.message;
         }
     });
+	
+	 var xhr = new XMLHttpRequest();
+			xhr.responseType = "json";
+			xhr.open("POST", "/devices/setUV");
+			xhr.setRequestHeader("Content-type", "application/json");
+			xhr.send(JSON.stringify({access_token: $("#token").val(), uvThreshold: $("#threshold").val(), deviceId: $("#deviceId").val()})); 
 }
